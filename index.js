@@ -1,7 +1,7 @@
 const fs = require('fs');
 const nanoid = require('nanoid');
 const process = require('process');
-const { create } = require('./mkaction');
+const { create, remove, update, read, list } = require('./mkaction');
 
 const db = {};
 let whatchid;
@@ -21,6 +21,7 @@ fs.readFile('conf.json', (err, data) => {
           result = JSON.parse(file);
         } catch {
           console.error(`${listenAt} is not json`);
+          result = { }
         }
         /**
          * o arquivo foi alterado!
@@ -36,7 +37,7 @@ fs.readFile('conf.json', (err, data) => {
           console.log(`found ${ result.id }`)
           const { resolve } = db[result.id]
           db[result.id] = undefined
-          resolve({ ...result, id: undefined })
+          resolve(result)
         }
       })
     })
@@ -54,12 +55,14 @@ fs.readFile('conf.json', (err, data) => {
         if (err) reject(err);
         db[id].status = 'pending';
       })
-    })
+    }).catch(console.error)
 
     const pAdd2 = pAdd1.then(result => {
       if (result.err) {
         return Promise.reject(result.err)
       }  else {
+        console.log('then')
+        console.dir(result)
         return new Promise((resolve, reject) => {
           let id;
           do {
@@ -74,7 +77,126 @@ fs.readFile('conf.json', (err, data) => {
           })
         })
       }
-    })
+    }).catch(console.error)
+
+    const pList3 = pAdd2.then(result => {
+      if (result.err) {
+        return Promise.reject(result.err)
+      }  else {
+        console.log('then')
+        console.dir(result)
+        return new Promise((resolve, reject) => {
+          let id;
+          do {
+            id = nanoid()
+          } while (db[id]);
+          db[id] = { resolve, reject, status: 'writing' }
+  
+          const action = list() 
+          fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
+            if (err) reject(err);
+            db[id].status = 'pending';
+          })
+        })
+      }
+    }).catch(console.error)
+
+    const pUpdate4 = pList3.then(result => {
+      if (result.err) {
+        return Promise.reject(result.err)
+      }  else {
+        console.log('then')
+        console.dir(result)
+        return new Promise((resolve, reject) => {
+          let id;
+          do {
+            id = nanoid()
+          } while (db[id]);
+          db[id] = { resolve, reject, status: 'writing' }
+  
+          const action = update('todo2', 'ToDo2')
+          fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
+            if (err) reject(err);
+            db[id].status = 'pending';
+          })
+        })
+      }
+    }).catch(console.error)
+
+    const pView4 = pUpdate4.then(result => {
+      if (result.err) {
+        return Promise.reject(result.err)
+      }  else {
+        console.log('then')
+        console.dir(result)
+        return new Promise((resolve, reject) => {
+          let id;
+          do {
+            id = nanoid()
+          } while (db[id]);
+          db[id] = { resolve, reject, status: 'writing' }
+  
+          const action = read('ToDo2')
+          fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
+            if (err) reject(err);
+            db[id].status = 'pending';
+          })
+        })
+      }
+    }).catch(console.error)
+
+    const pRemove5 = pView4.then(result => {
+      if (result.err) {
+        return Promise.reject(result.err)
+      }  else {
+        console.log('then')
+        console.dir(result)
+        return new Promise((resolve, reject) => {
+          let id;
+          do {
+            id = nanoid()
+          } while (db[id]);
+          db[id] = { resolve, reject, status: 'writing' }
+  
+          const action = remove('todo1')
+          fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
+            if (err) reject(err);
+            db[id].status = 'pending';
+          })
+        })
+      }
+    }).catch(console.error)
+
+    const pList6 = pRemove5.then(result => {
+      if (result.err) {
+        return Promise.reject(result.err)
+      }  else {
+        console.log('then')
+        console.dir(result)
+        return new Promise((resolve, reject) => {
+          let id;
+          do {
+            id = nanoid()
+          } while (db[id]);
+          db[id] = { resolve, reject, status: 'writing' }
+  
+          const action = list()
+          fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
+            if (err) reject(err);
+            db[id].status = 'pending';
+          })
+        })
+      }
+    }).catch(console.error)
+
+    pList6.then(result => {
+      if (result.err) {
+        return Promise.reject(result.err)
+      }  else {
+        console.log('then')
+        console.dir(result)
+      }
+    }).catch(console.error)
 
     
   } catch (err) {
