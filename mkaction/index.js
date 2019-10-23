@@ -8,4 +8,5 @@ module.exports = {
   read,
   update,
   remove,
+  list,
 }
