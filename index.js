@@ -52,7 +52,11 @@ fs.readFile('conf.json', (err, data) => {
       
       const action = create('todo1') 
       fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
-        if (err) reject(err);
+        if (err) {
+          console.log('pAdd1 write error');
+          console.err(err);
+          reject(err);
+        }
         db[id].status = 'pending';
       })
     }).catch(console.error)
@@ -72,7 +76,11 @@ fs.readFile('conf.json', (err, data) => {
   
           const action = create('todo2') 
           fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
-            if (err) reject(err);
+            if (err) {
+              console.log('pAdd2 write error');
+              console.err(err);
+              reject(err);
+            }
             db[id].status = 'pending';
           })
         })
@@ -94,7 +102,11 @@ fs.readFile('conf.json', (err, data) => {
   
           const action = list() 
           fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
-            if (err) reject(err);
+            if (err) {
+              console.log('pList3 write error');
+              console.err(err);
+              reject(err);
+            }
             db[id].status = 'pending';
           })
         })
@@ -114,9 +126,13 @@ fs.readFile('conf.json', (err, data) => {
           } while (db[id]);
           db[id] = { resolve, reject, status: 'writing' }
   
-          const action = update('todo2', 'ToDo2')
+          const action = update('todo2')('ToDo2')
           fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
-            if (err) reject(err);
+            if (err) {
+              console.log('pUpdate4 write error');
+              console.err(err);
+              reject(err);
+            }
             db[id].status = 'pending';
           })
         })
@@ -138,7 +154,11 @@ fs.readFile('conf.json', (err, data) => {
   
           const action = read('ToDo2')
           fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
-            if (err) reject(err);
+            if (err) {
+              console.log('pView4 write error');
+              console.err(err);
+              reject(err);
+            }
             db[id].status = 'pending';
           })
         })
@@ -160,7 +180,11 @@ fs.readFile('conf.json', (err, data) => {
   
           const action = remove('todo1')
           fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
-            if (err) reject(err);
+            if (err) {
+              console.log('pRemove5 write error');
+              console.err(err);
+              reject(err);
+            }
             db[id].status = 'pending';
           })
         })
@@ -182,7 +206,11 @@ fs.readFile('conf.json', (err, data) => {
   
           const action = list()
           fs.writeFile(writeAt, JSON.stringify({ id, action }, null, 2), err => {
-            if (err) reject(err);
+            if (err) {
+              console.log('pList6 write error');
+              console.err(err);
+              reject(err);
+            }
             db[id].status = 'pending';
           })
         })

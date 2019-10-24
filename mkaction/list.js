@@ -2,4 +2,4 @@ const model = {
   type: 'list',
 }
 
-module.exports = () => mode
+module.exports = () => model
