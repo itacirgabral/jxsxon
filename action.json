@@ -1,6 +1,7 @@
 {
-  "id": "YT73INUTaQuFpBvkd5DNA",
+  "id": "bc19VRrdBI70bsg3Mh_Y5",
   "action": {
-    "type": "list"
+    "type": "remove",
+    "todo": "todo1"
   }
 }
